@@ -35,6 +35,7 @@ export default function TopBar() {
   const handleChange = (event) => {
     setAuth(event.target.checked);
   };
+  console.log("user",currentUser.providerData[0].email)
   async function handleLogout() {
     setError("")
 
@@ -55,15 +56,25 @@ export default function TopBar() {
   const handleProfile = () => {
     history.push("/profile")
   };
+  const handleHomeClick = () => {
+    history.push("/")
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+        <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <Typography onClick={handleHomeClick}>
+            {currentUser.providerData[0].email}
+                </Typography>
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Photos
           </Typography>
           {auth && (
             <div>
@@ -91,6 +102,8 @@ export default function TopBar() {
                 open={open}
                 onClose={handleClose}
               >
+                <MenuItem onClick={handleHomeClick} href={"/"}
+                >Home</MenuItem>
                 <MenuItem onClick={handleProfile} href={"./profile"}
                 >Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
